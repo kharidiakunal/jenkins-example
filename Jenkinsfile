@@ -8,6 +8,8 @@ if (upStreamJobsList[APPLICATION]) {
     upstreamJobs = upStreamJobsList[APPLICATION]
 }
 
+println "Job Run :" APPLICATION + "Upstream job : " + upstreamJobs
+
 pipeline {
     agent any
 
