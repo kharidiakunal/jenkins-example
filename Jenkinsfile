@@ -1,6 +1,13 @@
+mavenVersion = 'Maven 3.5.0'
+
 pipeline {
     agent any
 
+tools {
+        jdk "Oracle JDK 1.8.0_25 Windows"
+        maven "${mavenVersion}"
+    }
+    
     stages {
         stage ('Compile Stage') {
 
