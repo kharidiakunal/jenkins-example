@@ -1,6 +1,6 @@
 mavenVersion = 'Maven 3.5.0'
 def upstreamJobs = ''
-def upStreamJobsList = ['MB1/master' : ['MB2/master']]
+def upStreamJobsList = ['MB2/master' : ['MB1/master']]
 String APPLICATION = env.JOB_NAME
 println APPLICATION
 
