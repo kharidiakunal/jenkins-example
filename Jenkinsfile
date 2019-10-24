@@ -1,4 +1,7 @@
 mavenVersion = 'Maven 3.5.0'
+def upStreamJobsList = ['mb1/develop' : ['mb2/develop']]
+String APPLICATION = env.JOB_NAME
+println APPLICATION
 
 pipeline {
     agent any
