@@ -3,35 +3,26 @@ mavenVersion = 'Maven 3.5.0'
 pipeline {
     agent any
 
-tools {
-        maven "Maven 3.5.0"
-    }
-    
+   
     stages {
         stage ('Compile Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn clean compile'
-                }
+				sh 'echo compile stage'
             }
         }
 
         stage ('Testing Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn test'
-                }
+				sh 'echo Testing Stage'
             }
         }
 
 
         stage ('Deployment Stage') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn install'
-                }
+				sh 'echo Deployment Stage'
             }
         }
     }
