@@ -53,11 +53,11 @@ pipeline {
       stage("Deploy artifact to maven on commit to master") {
             when {
                 not {
-                    expression { params.performRelease }
+                    expression { false }
                 }
                 anyOf {
-                    branch "${autoDeployBranch}"
-                    expression { params.forceDeploy }
+                    branch "master"
+                    expression { false }
                     expression { autoDeployBranchList.contains(BRANCH_NAME) }
                 }
             }
