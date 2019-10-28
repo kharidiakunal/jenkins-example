@@ -49,4 +49,5 @@ pipeline {
 				sh 'echo Deployment Stage'
             }
         }
+	}
 }
