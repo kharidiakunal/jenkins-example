@@ -49,21 +49,4 @@ pipeline {
 				sh 'echo Deployment Stage'
             }
         }
-	    
-      stage("Deploy artifact to maven on commit to master") {
-            when {
-                not {
-                    expression { false }
-                }
-                anyOf {
-                    branch "master"
-                    expression { false }
-                    expression { autoDeployBranchList.contains(BRANCH_NAME) }
-                }
-            }
-            steps {
-               sh 'echo Deploy artifact to nexus'
-            }
-        }
-    }
 }
