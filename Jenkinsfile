@@ -1,6 +1,6 @@
 mavenVersion = 'Maven 3.5.0'
 def upstreamJobs = ''
-def upStreamJobsList = ['mb2/master' : 'MB1/master']
+def upStreamJobsList = ['mb2/master' : 'MB1/master343']
 String APPLICATION = env.JOB_NAME
 println APPLICATION
 autoDeployBranch = "master"
