@@ -83,7 +83,7 @@ pipeline {
 						rootSonarBranch = ""
 						targetSonarBranch = ""
 						
-						if(env.CHANGE_ID){
+						if(1){
 
 							// PR analysis
 							
