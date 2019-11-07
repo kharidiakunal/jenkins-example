@@ -22,8 +22,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                branch = getPRTargetBranchInfoFromGithubApi('kharidiakunal')
-		println branch
+                println getPRTargetBranchInfoFromGithubApi('kharidiakunal')
             }
         }
     }
