@@ -1,5 +1,8 @@
 mavenVersion = 'Maven 3.5.0'
 def upstreamJobs = ''
+def MAVEN_TOOLCHAINS = ''
+def MAVEN_SETTINGS = ''
+def JAVA_6_HOME = ''
 def upStreamJobsList = ['mb2/master' : 'MB1/master343']
 String APPLICATION = env.JOB_NAME
 println APPLICATION
@@ -26,9 +29,6 @@ pipeline {
     }
 	
     environment {
-	MAVEN_TOOLCHAINS = ""
-	MAVEN_SETTINGS = ""
-	JAVA_6_HOME = ""
         mvnCmdOptions = "-U -PMVN_TOOLCHAINS --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
         mvnCmdOptionsWithoutToolchains = "-U --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
         gitCredentialsId = 'cibuilder_github'
