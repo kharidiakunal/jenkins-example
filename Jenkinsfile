@@ -76,30 +76,7 @@ pipeline {
 
 					script{
 
-						sonarBranch = ""
-
-						sonarArguments = ""
-						gitCredentialsId = "kharidiakunal"
-						rootSonarBranch = ""
-						targetSonarBranch = ""
-						
-						if(1){
-
-							// PR analysis
-							
-							println "PR Analysis"
-
-						}else{
-
-							sonarBranchNameArgs = ""
-
-							sonarBranchTargetNameArgs = ""
-
-							// Branch analysis
-
-							println "Branch Analysis"
-
-						}
+						println "Run Sonar"
 
 					}
 				}
