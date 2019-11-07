@@ -26,12 +26,15 @@ pipeline {
     }
 	
     environment {
-        mvnCmdOptions = "-U -PMVN_TOOLCHAINS --toolchains"
-        mvnCmdOptionsWithoutToolchains = "-U --toolchains"
+	MAVEN_TOOLCHAINS = ""
+	MAVEN_SETTINGS = ""
+	JAVA_6_HOME = ""
+        mvnCmdOptions = "-U -PMVN_TOOLCHAINS --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
+        mvnCmdOptionsWithoutToolchains = "-U --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
         gitCredentialsId = 'cibuilder_github'
         autoDeployBranch = "master"
         autoDeployBranchList = 'master,dev,task/upgrade-logging,ccqq,dev-ccqq,dev-webzone,cbfq,dev-hqq-ocp3.6,ccl2-dev,dev-cbfq,develop,cbfq-nv'
-		skipTestsOption = "-Dmaven.test.skip=true"
+		skipTestsOption = "-Dmaven.test.skip=true -Djava6.home=${JAVA_6_HOME}"
         IS_UNIX = isUnix()
         baseReleaseWorkingDirectory = '-DbaseReleaseWorkingDirectory=F:/Data/tmp/intact-release'
         mvnAutoRelease = "-Dsha1=-\$BUILD_TIMESTAMP -Dchangelist="
