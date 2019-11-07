@@ -20,6 +20,9 @@ pipeline {
     parameters {
         booleanParam(name: 'forceDeploy', defaultValue: false, description: 'Forces the maven deploy of the current branch')
         booleanParam(name: 'performRelease', defaultValue: false, description: 'Performs a release of the current version of the application')
+	booleanParam(name: 'activateSonar', defaultValue: true, description: 'Performs a release of the current version of the application')    
+
+    
     }
 
     triggers {
@@ -42,6 +45,90 @@ pipeline {
 				sh 'echo Testing Stage'
             }
         }
+	    
+	    //stage run sonar starts here
+	    
+	    stage("Run Sonar") {
+
+				when {
+
+					expression { params.activateSonar }
+
+				}
+
+				steps {
+
+					script{
+
+						sonarBranch = ""
+
+						sonarArguments = ""
+
+						if(env.CHANGE_ID){
+
+							// PR analysis
+
+							REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
+
+							targetBranchName = getPRTargetBranchInfoFromGithubApi(pipelineParams.gitCredentialsId)
+
+							sonarArguments = "${pipelineParams.mvnCmdOptions} \
+
+								-Dsonar.pullrequest.provider=github \
+
+								-Dsonar.host.url=${sonarHostUrl} \
+
+								-Dsonar.pullrequest.key=${env.CHANGE_ID} \
+
+								-Dsonar.pullrequest.branch=${env.BRANCH_NAME} \
+
+								-Dsonar.pullrequest.github.repository=${REPOSITORY} \
+
+								-Dsonar.pullrequest.base=${targetBranchName} \
+
+								-Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
+
+						}else{
+
+							sonarBranchNameArgs = ""
+
+							sonarBranchTargetNameArgs = ""
+
+							// Branch analysis
+
+							if(env.BRANCH_NAME.toUpperCase() !=  pipelineParams.rootSonarBranch.toUpperCase()) {
+
+								sonarBranchNameArgs = "-Dsonar.branch.name=${env.BRANCH_NAME}"
+
+								if(env.BRANCH_NAME.toUpperCase() != pipelineParams.targetSonarBranch.toUpperCase() ) {
+
+									sonarBranchTargetNameArgs = "-Dsonar.branch.target=${pipelineParams.targetSonarBranch}"
+
+								}	
+
+							}
+
+
+
+							sonarArguments = "${pipelineParams.mvnCmdOptions} \
+
+										-Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranchNameArgs} ${sonarBranchTargetNameArgs}"
+
+						}
+
+					}
+
+					withSonarQubeEnv("${sonarQubeServer}") {
+
+						bat "mvn sonar:sonar ${sonarArguments}"
+
+					}
+
+				}
+
+			}
+	    
+	    //stage run sonar ends here
 
 
         stage ('Deployment Stage') {
