@@ -8,7 +8,7 @@ pipeline {
     withCredentials([usernamePassword(credentialsId: 'kharidiakunal', passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USERNAME')]) {
         def REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
         def githubApiGetPREndpoint = "https://githubifc.iad.ca.inet/api/v3/repos/${REPOSITORY}/pulls/${env.CHANGE_ID}"
-        def githupApiCurlResponse = bat(returnStdout:true , script:"curl -v -k -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} ${githubApiGetPREndpoint}")
+         githupApiCurlResponse = sh(script:"curl -v -k -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} ${githubApiGetPREndpoint}", returnStdout:true)   
     }
             }
         }
