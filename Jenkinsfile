@@ -86,12 +86,8 @@ pipeline {
 						if(env.CHANGE_ID){
 
 							// PR analysis
-
-							REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
-
-							//targetBranchName = getPRTargetBranchInfoFromGithubApi(gitCredentialsId)
-
-							//sonarArguments = "${mvnCmdOptions} -Dsonar.pullrequest.provider=github -Dsonar.host.url=${sonarHostUrl} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME} -Dsonar.pullrequest.github.repository=${REPOSITORY} -Dsonar.pullrequest.base=${targetBranchName} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
+							
+							println "PR Analysis"
 
 						}else{
 
@@ -101,21 +97,7 @@ pipeline {
 
 							// Branch analysis
 
-							if(env.BRANCH_NAME.toUpperCase() !=  rootSonarBranch.toUpperCase()) {
-
-								sonarBranchNameArgs = "-Dsonar.branch.name=${env.BRANCH_NAME}"
-
-								if(env.BRANCH_NAME.toUpperCase() != targetSonarBranch.toUpperCase() ) {
-
-									sonarBranchTargetNameArgs = "-Dsonar.branch.target=${targetSonarBranch}"
-
-								}	
-
-							}
-
-
-
-							//sonarArguments = "${mvnCmdOptions} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranchNameArgs} ${sonarBranchTargetNameArgs}"
+							println "Branch Analysis"
 
 						}
 
@@ -123,7 +105,7 @@ pipeline {
 
 					withSonarQubeEnv("${sonarQubeServer}") {
 
-						bat "mvn sonar:sonar ${sonarArguments}"
+						sh "mvn sonar:sonar ${sonarArguments}"
 
 					}
 
