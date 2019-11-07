@@ -72,21 +72,7 @@ pipeline {
 
 							targetBranchName = getPRTargetBranchInfoFromGithubApi(pipelineParams.gitCredentialsId)
 
-							sonarArguments = "${pipelineParams.mvnCmdOptions} \
-
-								-Dsonar.pullrequest.provider=github \
-
-								-Dsonar.host.url=${sonarHostUrl} \
-
-								-Dsonar.pullrequest.key=${env.CHANGE_ID} \
-
-								-Dsonar.pullrequest.branch=${env.BRANCH_NAME} \
-
-								-Dsonar.pullrequest.github.repository=${REPOSITORY} \
-
-								-Dsonar.pullrequest.base=${targetBranchName} \
-
-								-Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
+							sonarArguments = "${pipelineParams.mvnCmdOptions} -Dsonar.pullrequest.provider=github -Dsonar.host.url=${sonarHostUrl} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME} -Dsonar.pullrequest.github.repository=${REPOSITORY} -Dsonar.pullrequest.base=${targetBranchName} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
 
 						}else{
 
@@ -128,6 +114,7 @@ pipeline {
 
 			}
 	    
+		// Run Sonar ends here
 	    
 	    
         stage ('Deployment Stage') {
