@@ -96,7 +96,7 @@ pipeline {
 
 
 
-							sonarArguments = "${pipelineParams.mvnCmdOptions} \
+							sonarArguments = "${pipelineParams.mvnCmdOptions} \n
 
 										-Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranchNameArgs} ${sonarBranchTargetNameArgs}"
 
