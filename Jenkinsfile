@@ -102,13 +102,6 @@ pipeline {
 						}
 
 					}
-
-					withSonarQubeEnv("${sonarQubeServer}") {
-
-						sh "mvn sonar:sonar ${sonarArguments}"
-
-					}
-
 				}
 
 			}
