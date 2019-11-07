@@ -66,11 +66,6 @@ pipeline {
 	    
 	stage("Run Sonar") {
 
-				when {
-
-					expression { params.activateSonar }
-
-				}
 
 				steps {
 
