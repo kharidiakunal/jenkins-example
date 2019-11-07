@@ -24,20 +24,6 @@ pipeline {
 
     
     }
-	
-	
-    environment {
-        mvnCmdOptions = "-U -PMVN_TOOLCHAINS --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
-        mvnCmdOptionsWithoutToolchains = "-U --toolchains ${MAVEN_TOOLCHAINS} --settings ${MAVEN_SETTINGS} -Djava6.home=${JAVA_6_HOME}"
-        gitCredentialsId = 'cibuilder_github'
-        autoDeployBranch = "master"
-        autoDeployBranchList = 'master,dev,task/upgrade-logging,ccqq,dev-ccqq,dev-webzone,cbfq,dev-hqq-ocp3.6,ccl2-dev,dev-cbfq,develop,cbfq-nv'
-		skipTestsOption = "-Dmaven.test.skip=true -Djava6.home=${JAVA_6_HOME}"
-        IS_UNIX = isUnix()
-        baseReleaseWorkingDirectory = '-DbaseReleaseWorkingDirectory=F:/Data/tmp/intact-release'
-        mvnAutoRelease = "-Dsha1=-\$BUILD_TIMESTAMP -Dchangelist="
-
-    }
 
     triggers {
         upstream(
@@ -77,6 +63,7 @@ pipeline {
 						sonarBranch = ""
 
 						sonarArguments = ""
+						gitCredentialsId = "kharidiakunal"
 
 						if(env.CHANGE_ID){
 
@@ -84,9 +71,9 @@ pipeline {
 
 							REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
 
-							targetBranchName = getPRTargetBranchInfoFromGithubApi(pipelineParams.gitCredentialsId)
+							targetBranchName = getPRTargetBranchInfoFromGithubApi(gitCredentialsId)
 
-							sonarArguments = "${pipelineParams.mvnCmdOptions} -Dsonar.pullrequest.provider=github -Dsonar.host.url=${sonarHostUrl} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME} -Dsonar.pullrequest.github.repository=${REPOSITORY} -Dsonar.pullrequest.base=${targetBranchName} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
+							sonarArguments = "${mvnCmdOptions} -Dsonar.pullrequest.provider=github -Dsonar.host.url=${sonarHostUrl} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME} -Dsonar.pullrequest.github.repository=${REPOSITORY} -Dsonar.pullrequest.base=${targetBranchName} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
 
 						}else{
 
@@ -96,13 +83,13 @@ pipeline {
 
 							// Branch analysis
 
-							if(env.BRANCH_NAME.toUpperCase() !=  pipelineParams.rootSonarBranch.toUpperCase()) {
+							if(env.BRANCH_NAME.toUpperCase() !=  rootSonarBranch.toUpperCase()) {
 
 								sonarBranchNameArgs = "-Dsonar.branch.name=${env.BRANCH_NAME}"
 
-								if(env.BRANCH_NAME.toUpperCase() != pipelineParams.targetSonarBranch.toUpperCase() ) {
+								if(env.BRANCH_NAME.toUpperCase() != targetSonarBranch.toUpperCase() ) {
 
-									sonarBranchTargetNameArgs = "-Dsonar.branch.target=${pipelineParams.targetSonarBranch}"
+									sonarBranchTargetNameArgs = "-Dsonar.branch.target=${targetSonarBranch}"
 
 								}	
 
@@ -110,7 +97,7 @@ pipeline {
 
 
 
-							sonarArguments = "${pipelineParams.mvnCmdOptions} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranchNameArgs} ${sonarBranchTargetNameArgs}"
+							sonarArguments = "${mvnCmdOptions} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranchNameArgs} ${sonarBranchTargetNameArgs}"
 
 						}
 
