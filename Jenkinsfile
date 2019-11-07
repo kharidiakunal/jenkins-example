@@ -89,7 +89,7 @@ pipeline {
 
 							REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
 
-							targetBranchName = getPRTargetBranchInfoFromGithubApi(gitCredentialsId)
+							//targetBranchName = getPRTargetBranchInfoFromGithubApi(gitCredentialsId)
 
 							sonarArguments = "${mvnCmdOptions} -Dsonar.pullrequest.provider=github -Dsonar.host.url=${sonarHostUrl} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.BRANCH_NAME} -Dsonar.pullrequest.github.repository=${REPOSITORY} -Dsonar.pullrequest.base=${targetBranchName} -Dsonar.projectKey=${projectGroupId}:${projectArtifactId} ${sonarBranch}"
 
