@@ -31,7 +31,7 @@ pipeline {
         gitCredentialsId = 'cibuilder_github'
         autoDeployBranch = "master"
         autoDeployBranchList = 'master,dev,task/upgrade-logging,ccqq,dev-ccqq,dev-webzone,cbfq,dev-hqq-ocp3.6,ccl2-dev,dev-cbfq,develop,cbfq-nv'
-		skipTestsOption = "-Dmaven.test.skip=true -Djava6.home=${JAVA_6_HOME}"
+		skipTestsOption = "-Dmaven.test.skip=true"
         IS_UNIX = isUnix()
         baseReleaseWorkingDirectory = '-DbaseReleaseWorkingDirectory=F:/Data/tmp/intact-release'
         mvnAutoRelease = "-Dsha1=-\$BUILD_TIMESTAMP -Dchangelist="
