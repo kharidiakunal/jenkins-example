@@ -1,4 +1,4 @@
-string getPRTargetBranchInfoFromGithubApi(githubApiCredentialsId){
+string getPRTargetBranchInfoFromGithubApi(string githubApiCredentialsId){
         githupApiCurlResponse =""
     withCredentials([usernamePassword(credentialsId: githubApiCredentialsId, passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USERNAME')]) {
         REPOSITORY = JOB_NAME.replace("/${env.BRANCH_NAME}","")
