@@ -64,7 +64,8 @@ pipeline {
 
 						sonarArguments = ""
 						gitCredentialsId = "kharidiakunal"
-
+						rootSonarBranch = ""
+						
 						if(env.CHANGE_ID){
 
 							// PR analysis
