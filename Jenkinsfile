@@ -1,8 +1,8 @@
 mavenVersion = 'Maven 3.5.0'
 def upstreamJobs = ''
-def MAVEN_TOOLCHAINS = ''
-def MAVEN_SETTINGS = ''
-def JAVA_6_HOME = ''
+def MAVEN_TOOLCHAINS = '/opt/jenkins/tools/toolchains.xml'
+def MAVEN_SETTINGS = '/opt/jenkins/tools/settings.xml'
+def JAVA_6_HOME = '/opt/jenkins/tools/ibm-java-i386-60'
 def upStreamJobsList = ['mb2/master' : 'MB1/master343']
 String APPLICATION = env.JOB_NAME
 println APPLICATION
