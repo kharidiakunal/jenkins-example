@@ -65,6 +65,7 @@ pipeline {
 						sonarArguments = ""
 						gitCredentialsId = "kharidiakunal"
 						rootSonarBranch = ""
+						targetSonarBranch = ""
 						
 						if(env.CHANGE_ID){
 
