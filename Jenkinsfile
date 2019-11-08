@@ -1,4 +1,3 @@
-import groovy.json.JsonSlurperClassic
 pipeline {
     agent any
     stages {
@@ -17,10 +16,12 @@ pipeline {
 					 def githubApiGetPREndpoint = "https://api.github.com/repos/kharidiakunal/${REPOSITORY}/pulls/${changeid}"
                      println githupApiCurlResponse = sh(script:"curl -v -k -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} ${githubApiGetPREndpoint}", returnStdout:true)   
 					 pullRequestDetailsJSONText = githupApiCurlResponse.find(/(\{[\s\S\}]*)/)
-					 println pullRequestDetailsJSONText
-					 def jsonSlurper = new groovy.json.JsonSlurperClassic()
-					 def pullRequestDetailsJSON = jsonSlurper.parseText(JSONText)
-					 def targetBranchName = pullRequestDetailsJSON.base.ref
+					 //println pullRequestDetailsJSONText
+					 //def jsonSlurper = new groovy.json.JsonSlurperClassic()
+					 //def pullRequestDetailsJSON = jsonSlurper.parseText(JSONText)
+					 def jsonObj = readJSON text: pullRequestDetailsJSONText
+
+					 def targetBranchName = jsonObj.base.ref
 					println targetBranchName
 					 
 					 //return extractTargetBranchName(pullRequestDetailsJSONText)                 
