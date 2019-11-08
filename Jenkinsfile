@@ -17,6 +17,11 @@ pipeline {
                      println githupApiCurlResponse = sh(script:"curl -v -k -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} ${githubApiGetPREndpoint}", returnStdout:true)   
 					 pullRequestDetailsJSONText = githupApiCurlResponse.find(/(\{[\s\S\}]*)/)
 					 println pullRequestDetailsJSONText
+					 def jsonSlurper = new groovy.json.JsonSlurperClassic()
+					 def pullRequestDetailsJSON = jsonSlurper.parseText(JSONText)
+					 def targetBranchName = pullRequestDetailsJSON.base.ref
+					println targetBranchName
+					 
 					 //return extractTargetBranchName(pullRequestDetailsJSONText)                 
                    
                    }
@@ -25,4 +30,3 @@ pipeline {
         }
     }
 }
-
