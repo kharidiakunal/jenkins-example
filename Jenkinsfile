@@ -22,7 +22,7 @@ pipeline {
 					 def jsonObj = readJSON text: pullRequestDetailsJSONText
 
 					 def targetBranchName = jsonObj.base.ref
-					println targetBranchName
+					println "Target Branch Name" + targetBranchName
 					 
 					 //return extractTargetBranchName(pullRequestDetailsJSONText)                 
                    
