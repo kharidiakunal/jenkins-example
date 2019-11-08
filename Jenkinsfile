@@ -12,8 +12,13 @@ pipeline {
                      def REPOSITORY = "jenkins-example"
                      println "repository" + REPOSITORY
                        println "Github Username" + GITHUB_USERNAME + "Github Password : " + GITHUB_TOKEN
-                     def githubApiGetPREndpoint = "https://githubifc.iad.ca.inet/api/v3/repos/${REPOSITORY}/pulls/${changeid}"
+                     //def githubApiGetPREndpoint = "https://githubifc.iad.ca.inet/api/v3/repos/${REPOSITORY}/pulls/${changeid}"
+					 def githubApiGetPREndpoint = "https://api.github.com/repos/kharidiakunal/${REPOSITORY}/pulls/${changeid}"
                      println githupApiCurlResponse = sh(script:"curl -v -k -u ${GITHUB_USERNAME}:${GITHUB_TOKEN} ${githubApiGetPREndpoint}", returnStdout:true)   
+					 pullRequestDetailsJSONText = githupApiCurlResponse.find(/(\{[\s\S\}]*)/)
+					 println pullRequestDetailsJSONText
+					 //return extractTargetBranchName(pullRequestDetailsJSONText)                 
+                   
                    }
                 }    
             }
